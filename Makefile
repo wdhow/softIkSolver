@@ -15,8 +15,8 @@ VERSION =	$(MAJOR).$(MINOR)
 
 LIBNAME =	$(NAME).so
 
-C++			= g++412
-MAYAVERSION = 2014
+C++			= gcc
+MAYAVERSION = 2018
 # Uncomment the following line on MIPSpro 7.2 compilers to supress
 # warnings about declarations in the X header files
 # WARNFLAGS	= -woff 3322
@@ -25,13 +25,13 @@ MAYAVERSION = 2014
 # occur much faster.  If you link transitively (the default) then
 # a number of "ld Warning 85" messages will be printed by ld.
 # They are expected, and can be safely ignored.
-MAYA_LOCATION = /usr/autodesk/maya$(MAYAVERSION)-x64/
-INSTALL_PATH = /home/alan/projects/deploy/maya/tcSoftIkSolver/1.0/plug-ins/$(MAYAVERSION)/linux
-CFLAGS		= -m64 -pthread -pipe -D_BOOL -DLINUX -DREQUIRE_IOSTREAM -Wno-deprecated -fno-gnu-keywords -fPIC 
+MAYA_LOCATION = /usr/autodesk/maya
+INSTALL_PATH = $(HOME)/maya/$(MAYAVERSION)/plugins
+CFLAGS		= -m64 -pthread -pipe -D_BOOL -DLINUX -DREQUIRE_IOSTREAM -Wno-deprecated -fno-gnu-keywords -fPIC -std=gnu++0x
 C++FLAGS	= $(CFLAGS) $(WARNFLAGS)
-INCLUDES	= -I. -I$(MAYA_LOCATION)/include -I/home/alan/projects/build/include/libxml2 -I/home/alan/projects/build/include -I/home/alan/projects/build/include/LicenseClient
+INCLUDES	= -I. -I$(MAYA_LOCATION)/include
 LD			= $(C++) -shared $(C++FLAGS)
-LIBS		= -L$(MAYA_LOCATION)/lib -lOpenMaya -lOpenMayaAnim -L/home/alan/projects/build/lib -lLicenseClient -lSockets -lssl -lcrypto -lpthread -ldl
+LIBS		= -L$(MAYA_LOCATION)/lib -lOpenMaya -lOpenMayaAnim -lssl -lcrypto -lpthread -ldl
 
 .SUFFIXES: .cpp .cc .o .so .c
 

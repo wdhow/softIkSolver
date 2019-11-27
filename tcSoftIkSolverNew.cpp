@@ -312,6 +312,7 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 	MDagPath lastJointPath = getEndJoint(handlePath);
 	MFnIkJoint endJointFn(lastJointPath);
+	MVector tmp;
 
 	if (!handleFn.hasAttribute("asft", &status))
 	{
@@ -410,7 +411,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 		double scale[3] = { 0.0, 0.0, 0.0 };
 		midJointFn.getScale(scale);
-		setPointValue(attr, handleFn.object(), MVector(scale[0], scale[1], scale[2]));
+		tmp = MVector(scale[0], scale[1], scale[2]);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 	MTransformationMatrix::RotationOrder rotateOrder = MTransformationMatrix::kXYZ;
 	if (!handleFn.hasAttribute("mjro", &status))
@@ -440,7 +442,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 		double rotate[3] = { 0.0, 0.0, 0.0 };
 		midJointFn.getRotation(rotate, rotateOrder);
-		setPointValue(attr, handleFn.object(), MVector(rotate[0], rotate[1], rotate[2]));
+		tmp = MVector(rotate[0], rotate[1], rotate[2]);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("mjt", &status))
@@ -452,8 +455,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 		fnAttr.setStorable(1);
 		fnAttr.setReadable(1);
 		handleFn.addAttribute(attr, MFnDependencyNode::kLocalDynamicAttr);
-
-		setPointValue(attr, handleFn.object(), midJointFn.getTranslation(MSpace::kTransform));
+		tmp = midJointFn.getTranslation(MSpace::kTransform);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("mjo", &status))
@@ -471,7 +474,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 		MQuaternion orientation;
 		midJointFn.getOrientation(orientation);
 		MEulerRotation rot = orientation.asEulerRotation();
-		setPointValue(attr, handleFn.object(), MVector(rot.x, rot.y, rot.z));
+		tmp = MVector(rot.x, rot.y, rot.z);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("mjra", &status))
@@ -489,8 +493,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 		MQuaternion orientation;
 		midJointFn.getScaleOrientation(orientation);
 		MEulerRotation rot = orientation.asEulerRotation();
-		setPointValue(attr, handleFn.object(), MVector(rot.x, rot.y, rot.z));
-
+		tmp = MVector(rot.x, rot.y, rot.z);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("mjis", &status))
@@ -505,7 +509,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 		double scale[3] = { 0.0, 0.0, 0.0 };
 		startJointFn.getScale(scale);
-		setPointValue(attr, handleFn.object(), MVector(scale[0], scale[1], scale[2]));
+		tmp = MVector(scale[0], scale[1], scale[2]);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	// end joint
@@ -521,7 +526,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 		double scale[3] = { 0.0, 0.0, 0.0 };
 		endJointFn.getScale(scale);
-		setPointValue(attr, handleFn.object(), MVector(scale[0], scale[1], scale[2]));
+		tmp = MVector(scale[0], scale[1], scale[2]);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 	
 	if (!handleFn.hasAttribute("ejro", &status))
@@ -551,7 +557,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 		double rotate[3] = { 0.0, 0.0, 0.0 };
 		endJointFn.getRotation(rotate, rotateOrder);
-		setPointValue(attr, handleFn.object(), MVector(rotate[0], rotate[1], rotate[2]));
+		tmp = MVector(rotate[0], rotate[1], rotate[2]);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("ejt", &status))
@@ -563,8 +570,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 		fnAttr.setStorable(1);
 		fnAttr.setReadable(1);
 		handleFn.addAttribute(attr, MFnDependencyNode::kLocalDynamicAttr);
-
-		setPointValue(attr, handleFn.object(), endJointFn.getTranslation(MSpace::kTransform));
+		tmp = endJointFn.getTranslation(MSpace::kTransform);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("ejo", &status))
@@ -582,7 +589,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 		MQuaternion orientation;
 		endJointFn.getOrientation(orientation);
 		MEulerRotation rot = orientation.asEulerRotation();
-		setPointValue(attr, handleFn.object(), MVector(rot.x, rot.y, rot.z));
+		tmp = MVector(rot.x, rot.y, rot.z);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	if (!handleFn.hasAttribute("ejra", &status))
@@ -600,7 +608,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 		MQuaternion orientation;
 		endJointFn.getScaleOrientation(orientation);
 		MEulerRotation rot = orientation.asEulerRotation();
-		setPointValue(attr, handleFn.object(), MVector(rot.x, rot.y, rot.z));
+		tmp = MVector(rot.x, rot.y, rot.z);
+		setPointValue(attr, handleFn.object(), tmp);
 
 	}
 
@@ -616,7 +625,8 @@ MStatus TcSoftIkSolverNodeNew::preSolve()
 
 		double scale[3] = { 0.0, 0.0, 0.0 };
 		midJointFn.getScale(scale);
-		setPointValue(attr, handleFn.object(), MVector(scale[0], scale[1], scale[2]));
+		tmp = MVector(scale[0], scale[1], scale[2]);
+		setPointValue(attr, handleFn.object(), tmp);
 	}
 
 	return MS::kSuccess;
